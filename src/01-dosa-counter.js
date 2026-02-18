@@ -32,5 +32,50 @@
  *   // => { type: "plain", quantity: 1, pricePerDosa: 40, total: 40 }
  */
 export function calculateDosaOrder(type, quantity = 1, isSpicy = false) {
-  // Your code here
+  let typeCost = 0;
+  if(quantity<=0)
+  {
+    return null;
+  }
+  switch (type) {
+    case "masala":
+      typeCost = 60;
+      break;
+    case "onion":
+      typeCost = 50;
+      break;
+    case "butter":
+      typeCost = 70;
+      break;
+    case "paper":
+      typeCost = 90;
+      break;
+    case "cheese":
+      typeCost = 80;
+      break;
+    case "plain":
+      typeCost = 40;
+      break;
+    default:
+      typeCost: null;
+  }
+  if(!typeCost){
+    return null;
+  }
+  let pricePerDosa=(isSpicy? typeCost=typeCost+10 : typeCost)
+  let totalCost = 0;
+  if (isSpicy) {
+    totalCost = pricePerDosa * quantity;
+  } else {
+    totalCost = pricePerDosa * quantity;
+  }
+  const ans = {
+    type: type,
+    quantity: quantity,
+    pricePerDosa: pricePerDosa,
+    total: totalCost,
+  };
+  if (!ans) {
+    return null;
+  } else return ans;
 }

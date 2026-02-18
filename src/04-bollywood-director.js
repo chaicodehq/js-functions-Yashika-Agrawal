@@ -45,13 +45,65 @@
  *   pricer("gold", true)  // => 200 * 1.5 * 1.3 = 390
  */
 export function createDialogueWriter(genre) {
-  // Your code here
+  if (!genre) return null;
+  if (
+    genre != "action" &&
+    genre != "romance" &&
+    genre != "comedy" &&
+    genre != "drama"
+  )
+    return null;
+  return function (hero, villain) {
+    if (!hero || !villain) return "...";
+    if (genre == "action") {
+      return `${hero} says: 'Tujhe toh main dekh lunga, ${villain}!'`;
+    } else if (genre == "romance") {
+      return `${hero} whispers: '${villain}, tum mere liye sab kuch ho'`;
+    } else if (genre == "comedy") {
+      return `${hero} laughs: '${villain} bhai, kya kar rahe ho yaar!'`;
+    } else if (genre == "drama") {
+      return `${hero} cries: '${villain}, tune mera sab kuch cheen liya!'`;
+    } else return null;
+  };
 }
 
 export function createTicketPricer(basePrice) {
   // Your code here
+  if (basePrice <= 0 || !basePrice) return null;
+  return function (seatType, isWeekend = false) {
+    if (!seatType) {
+      return null;
+    }
+    let seatPrice = 0;
+    if (seatType == "gold") {
+      seatPrice = basePrice * 1.5;
+    } else if (seatType == "platinum") {
+      seatPrice = basePrice * 2;
+    } else if (seatType == "silver") {
+      seatPrice = basePrice;
+    } else {
+      return null;
+    }
+    if (isWeekend) {
+      seatPrice = Math.round(seatPrice * 1.3);
+    } else {
+      seatPrice = Math.round(seatPrice);
+    }
+    return seatPrice;
+  };
 }
 
 export function createRatingCalculator(weights) {
   // Your code here
+  if (typeof weights != "object" || !weights) {
+    return null;
+  }
+
+  return function (scores) {
+    let ans = 0;
+    for (let key in weights) {
+      ans = ans + weights[key] * scores[key];
+    }
+    return Number(ans.toFixed(1));
+  };
 }
